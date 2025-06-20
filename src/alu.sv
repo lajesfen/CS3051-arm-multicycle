@@ -1,21 +1,29 @@
 module alu(input [31:0] a, b,
-           input [1:0] ALUControl,
+           input [2:0] ALUControl,
            output reg [31:0] Result,
            output wire [3:0] ALUFlags);
     
 	wire neg, zero, carry, overflow;
     wire [31:0] condinvb;
     wire [32:0] sum;
+    wire [31:0] mulres;
 
     assign condinvb = ALUControl[0] ? ~b : b;
     assign sum = a + condinvb + ALUControl[0];
 
+    mul mulinst (
+        .a(a),
+        .b(b),
+        .result(mulres)
+    );
+
     always @(*)
         begin
-            casex (ALUControl[1:0])
-            2'b0?: Result = sum;
-            2'b10: Result = a & b;
-            2'b11: Result = a | b;
+            casex (ALUControl[2:0])
+                3'b00?: Result = sum;
+                3'b010: Result = a & b;
+                3'b011: Result = a | b;
+                3'b100: Result = mulres[31:0];
             endcase
         end
     assign neg      = Result[31];
