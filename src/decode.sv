@@ -23,6 +23,8 @@ module decode (
 	input wire [1:0] Op;
 	input wire [5:0] Funct;
 	input wire [3:0] Rd;
+
+	// Salidas
 	output wire [1:0] FlagW;
 	output wire PCS;
 	output wire NextPC;
@@ -36,10 +38,18 @@ module decode (
 	output wire [1:0] ImmSrc;
 	output wire [1:0] RegSrc;
 	output wire [1:0] ALUControl;
+
+	// Señales internas
 	wire Branch;
 	wire ALUOp;
+	reg [1:0] flagw_reg;
+	reg [1:0] alu_reg;
 
-	// Main FSM
+	// Asignación de salida FlagW y ALUControl desde registro interno
+	assign FlagW = flagw_reg;
+	assign ALUControl = alu_reg;
+
+	// Máquina de estados principal
 	mainfsm fsm(
 		.clk(clk),
 		.reset(reset),
@@ -58,28 +68,30 @@ module decode (
 	);
 
 	// ALU Decoder
-    always @(*)
+	always @(*) begin
 		if (ALUOp) begin
 			case (Funct[4:1])
-				4'b0100: ALUControl = 2'b00;
-				4'b0010: ALUControl = 2'b01;
-				4'b0000: ALUControl = 2'b10;
-				4'b1100: ALUControl = 2'b11;
-				default: ALUControl = 2'bxx;
+				4'b0100: alu_reg = 2'b00;
+				4'b0010: alu_reg = 2'b01;
+				4'b0000: alu_reg = 2'b10;
+				4'b1100: alu_reg = 2'b11;
+				default: alu_reg = 2'bxx;
 			endcase
-			FlagW[1] = Funct[0];
-			FlagW[0] = Funct[0] & ((ALUControl == 2'b00) | (ALUControl == 2'b01));
+			flagw_reg[1] = Funct[0];
+			flagw_reg[0] = Funct[0] & ((alu_reg == 2'b00) | (alu_reg == 2'b01));
 		end
 		else begin
-			ALUControl = 2'b00;
-			FlagW = 2'b00;
+			alu_reg = 2'b00;
+			flagw_reg = 2'b00;
 		end
+	end
 
-	// PC Logic
-    assign PCS = ((Rd == 4'b1111) & RegW) | Branch;
+	// Lógica para PC
+	assign PCS = ((Rd == 4'b1111) & RegW) | Branch;
 
-	// Instr Decoder
+	// Decodificador de instrucciones
 	assign ImmSrc = Op;
-	assign RegSrc[0] = Op == 2'b10;
-    assign RegSrc[1] = Op == 2'b01;
+	assign RegSrc[0] = (Op == 2'b10);
+	assign RegSrc[1] = (Op == 2'b01);
+
 endmodule

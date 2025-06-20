@@ -86,7 +86,7 @@ module mainfsm (
 			EXECUTEI: controls = 13'b0000000000011;
 			ALUWB: controls = 13'b0001000000000;
 			MEMADR: controls = 13'b0000000000010;
-			MEMWR: controls = 13'b0010010000000;
+			MEMWRITE: controls = 13'b0010010000000;
 			MEMRD: controls = 13'b0000000000000;
 			MEMWB: controls = 13'b0001000100000;
 			BRANCH: controls = 13'b0100001000010;

@@ -58,11 +58,11 @@ module datapath (
 	);
 
     mux2 #(32) adrmux(
-        .d0(PC)
-        .d1(Result)
+        .d0(PC),
+        .d1(Result),
         .s(AdrSrc),
         .y(Adr)
-    )
+    );
 
     flopenr #(32) irreg(
         .clk(clk),
@@ -70,28 +70,28 @@ module datapath (
         .en(IRWrite),
         .d(ReadData),
         .q(Instr)
-    )
+    );
 
     flopr #(32) datareg(
         .clk(clk),
         .reset(reset),
         .d(ReadData),
         .q(Data)
-    )
+    );
 
     mux2 #(4) ra1mux(
         .d0(Instr[19:16]),
         .d1(4'd15), // 15
         .s(RegSrc[0]),
         .y(RA1)
-    )
+    );
 
     mux2 #(4) ra2mux(
         .d0(Instr[3:0]),
         .d1(Instr[15:12]),
         .s(RegSrc[1]),
         .y(RA2)
-    )
+    );
 
     regfile rf(
         .clk(clk),
@@ -103,13 +103,13 @@ module datapath (
         .r15(Result),
         .rd1(RD1),
         .rd2(RD2)
-    )
+    );
 
     extend ext(
 		.Instr(Instr[23:0]),
 		.ImmSrc(ImmSrc),
 		.ExtImm(ExtImm)
-	)
+	);
 
 	flopr2 #(32) rdreg(
 		.clk(clk),
@@ -118,14 +118,14 @@ module datapath (
 		.q0(A),
 		.d1(RD2),
 		.q1(WriteData)
-	)
+	);
 
 	mux2 #(32) srcamux(
 		.d0(A),
 		.d1(PC),
 		.s(ALUSrcA),
 		.y(SrcA)
-	)
+	);
 
 	mux3 #(32) srcbmux(
 		.d0(WriteData),
@@ -133,7 +133,7 @@ module datapath (
 		.d2(32'd4), // 4
 		.s(ALUSrcB),
 		.y(SrcB)
-	)
+	);
 
 	alu alu(
 		.a(SrcA),
@@ -141,14 +141,14 @@ module datapath (
 		.ALUControl(ALUControl),
 		.Result(ALUResult),
 		.ALUFlags(ALUFlags)
-	)
+	);
 
 	flopr #(32) aluresreg(
 		.clk(clk),
 		.reset(reset),
 		.d(ALUResult),
 		.q(ALUOut)
-	)
+	);
 
 	mux3 #(32) resmux(
 		.d0(ALUOut),
@@ -156,6 +156,6 @@ module datapath (
 		.d2(ALUResult),
 		.s(ResultSrc),
 		.y(Result)
-	)
+	);
 
 endmodule

@@ -43,7 +43,7 @@ module condlogic (
         .reset(reset),
         .d(CondExNext),
         .q(CondEx)
-    )
+    );
 
     flopenr #(2) flagreg1(
         .clk(clk),
@@ -51,7 +51,7 @@ module condlogic (
         .en(FlagWrite[1]),
         .d(ALUFlags[3:2]),
         .q(Flags[3:2])
-    )
+    );
 
     flopenr #(2) flagreg0(
         .clk(clk),
@@ -59,7 +59,7 @@ module condlogic (
         .en(FlagWrite[0]),
         .d(ALUFlags[1:0]),
         .q(Flags[1:0])
-    )
+    );
 
     condcheck cc(
         .Cond(Cond),

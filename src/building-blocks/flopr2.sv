@@ -14,10 +14,12 @@ module flopr2 (
     input wire [WIDTH - 1:0] d1;
     output reg [WIDTH - 1:0] q1;
 	always @(posedge clk or posedge reset)
-		if (reset)
+		if (reset) begin
 			q0 <= 0;
 			q1 <= 0;
-		else
+		end
+		else begin
 			q0 <= d0;
             q1 <= d1;
+        end
 endmodule
