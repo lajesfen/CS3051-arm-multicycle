@@ -21,6 +21,6 @@ module mul(
             multiplier = multiplier >> 1;
         end
 
-        result = product;
+        result = product[0:31];
     end
 endmodule
