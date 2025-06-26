@@ -1,7 +1,7 @@
 module mul(
     input wire [31:0] a,
     input wire [31:0] b,
-    output reg [63:0] result
+    output reg [31:0] result
 );
     integer i;
     reg [63:0] multiplicand;
@@ -21,6 +21,6 @@ module mul(
             multiplier = multiplier >> 1;
         end
 
-        result = product[0:31];
+        result = product[31:0];
     end
 endmodule
