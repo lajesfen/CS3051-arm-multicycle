@@ -23,7 +23,7 @@ module alu(input [31:0] a, b,
                 3'b00?: Result = sum;
                 3'b010: Result = a & b;
                 3'b011: Result = a | b;
-                3'b100: Result = mulres[31:0];
+                3'b100: Result = mulres;
             endcase
         end
     assign neg      = Result[31];
