@@ -66,7 +66,7 @@ module decode (
 		.RegW(RegW),
 		.MemW(MemW),
 		.Branch(Branch),
-		.ALUOp(ALUOp)
+		.ALUOp(ALUOp),
 		.RegW2(RegW2)
 	);
 

@@ -1,6 +1,6 @@
 module alu(input [31:0] a, b,
            input [2:0] ALUControl,
-           input wire RegWrite2
+           input wire RegWrite2,
            output reg [31:0] Result,
            output wire [3:0] ALUFlags);
     
@@ -16,7 +16,7 @@ module alu(input [31:0] a, b,
     mul mulinst (
         .a(a),
         .b(b),
-        .signed(ALUControl[1]),
+        .issigned(ALUControl[1]),
         .result(mulres)
     );
 

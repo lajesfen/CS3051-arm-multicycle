@@ -1,7 +1,7 @@
 module mul(
     input wire [31:0] a,
     input wire [31:0] b,
-    input wire signed,
+    input wire issigned,
     output reg [63:0] result
 );
     integer i;
@@ -10,8 +10,11 @@ module mul(
     reg [63:0] product;
 
     always @(*) begin
-        if (signed)
-            multiplicand = {32{a[31]}, a};
+        if (issigned)
+            if (a[31])
+                multiplicand = {32'b1, a};
+            else
+                multiplicand = {32'b0, a};
         else
             multiplicand = {32'b0, a};
         
