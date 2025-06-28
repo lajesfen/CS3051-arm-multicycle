@@ -6,6 +6,7 @@ module controller (
 	PCWrite,
 	MemWrite,
 	RegWrite,
+	RegWrite2,
 	IRWrite,
 	AdrSrc,
 	RegSrc,
@@ -22,6 +23,7 @@ module controller (
 	output wire PCWrite;
 	output wire MemWrite;
 	output wire RegWrite;
+	output wire RegWrite2;
 	output wire IRWrite;
 	output wire AdrSrc;
 	output wire [1:0] RegSrc;
@@ -45,6 +47,7 @@ module controller (
 		.PCS(PCS),
 		.NextPC(NextPC),
 		.RegW(RegW),
+		.RegW2(RegWrite2),
 		.MemW(MemW),
 		.IRWrite(IRWrite),
 		.AdrSrc(AdrSrc),

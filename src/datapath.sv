@@ -8,6 +8,7 @@ module datapath (
 	ALUFlags,
 	PCWrite,
 	RegWrite,
+	RegWrite2,
 	IRWrite,
 	AdrSrc,
 	RegSrc,
@@ -26,6 +27,7 @@ module datapath (
 	output wire [3:0] ALUFlags;
 	input wire PCWrite;
 	input wire RegWrite;
+	input wire RegWrite2;
 	input wire IRWrite;
 	input wire AdrSrc;
 	input wire [1:0] RegSrc;
@@ -139,6 +141,7 @@ module datapath (
 		.a(SrcA),
 		.b(SrcB),
 		.ALUControl(ALUControl),
+		.RegWrite2(RegWrite2),
 		.Result(ALUResult),
 		.ALUFlags(ALUFlags)
 	);

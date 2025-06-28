@@ -16,6 +16,7 @@ module arm (
 	wire [3:0] ALUFlags;
 	wire PCWrite;
 	wire RegWrite;
+	wire RegWrite2;
 	wire IRWrite;
 	wire AdrSrc;
 	wire [1:0] RegSrc;
@@ -32,6 +33,7 @@ module arm (
 		.PCWrite(PCWrite),
 		.MemWrite(MemWrite),
 		.RegWrite(RegWrite),
+		.RegWrite2(RegWrite2),
 		.IRWrite(IRWrite),
 		.AdrSrc(AdrSrc),
 		.RegSrc(RegSrc),
@@ -51,6 +53,7 @@ module arm (
 		.ALUFlags(ALUFlags),
 		.PCWrite(PCWrite),
 		.RegWrite(RegWrite),
+		.RegWrite2(RegWrite2),
 		.IRWrite(IRWrite),
 		.AdrSrc(AdrSrc),
 		.RegSrc(RegSrc),
