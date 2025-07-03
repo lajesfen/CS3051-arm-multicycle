@@ -8,6 +8,8 @@ module alu(input [31:0] a, b,
     wire [31:0] condinvb;
     wire [32:0] sum;
     wire [63:0] mulres;
+
+    wire [32:0] divrem;
     wire [31:0] divres;
 
     assign condinvb = ALUControl[0] ? ~b : b;
@@ -18,6 +20,13 @@ module alu(input [31:0] a, b,
         .b(b),
         .issigned(ALUControl[1]),
         .result(mulres)
+    );
+
+    div divinst (
+        .a(a),
+        .b(b),
+        .rem(divrem),
+        .q(divres)
     );
 
     always @(*)
