@@ -8,6 +8,7 @@ module datapath (
 	ALUFlags,
 	PCWrite,
 	RegWrite,
+	RegWrite2,
 	IRWrite,
 	AdrSrc,
 	RegSrc,
@@ -26,6 +27,7 @@ module datapath (
 	output wire [3:0] ALUFlags;
 	input wire PCWrite;
 	input wire RegWrite;
+	input wire RegWrite2;
 	input wire IRWrite;
 	input wire AdrSrc;
 	input wire [1:0] RegSrc;
@@ -45,6 +47,7 @@ module datapath (
 	wire [31:0] RD2;
 	wire [31:0] A;
 	wire [31:0] ALUResult;
+	wire [31:0] ALUResult2;
 	wire [31:0] ALUOut;
 	wire [3:0] RA1;
 	wire [3:0] RA2;
@@ -96,10 +99,13 @@ module datapath (
     regfile rf(
         .clk(clk),
         .we3(RegWrite),
+        .we4(RegWrite2),
         .ra1(RA1),
         .ra2(RA2),
         .wa3(Instr[15:12]),
+        .wa4(Instr[11:8]),
         .wd3(Result),
+        .wd4(ALUResult2),
         .r15(Result),
         .rd1(RD1),
         .rd2(RD2)
@@ -140,6 +146,7 @@ module datapath (
 		.b(SrcB),
 		.ALUControl(ALUControl),
 		.Result(ALUResult),
+		.Result2(ALUResult2),
 		.ALUFlags(ALUFlags)
 	);
 

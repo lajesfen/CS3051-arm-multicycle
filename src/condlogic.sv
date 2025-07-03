@@ -7,9 +7,11 @@ module condlogic (
 	PCS,
 	NextPC,
 	RegW,
+	RegW2,
 	MemW,
 	PCWrite,
 	RegWrite,
+	RegWrite2,
 	MemWrite
 );
 	input wire clk;
@@ -20,9 +22,11 @@ module condlogic (
 	input wire PCS;
 	input wire NextPC;
 	input wire RegW;
+	input wire RegW2;
 	input wire MemW;
 	output wire PCWrite;
 	output wire RegWrite;
+	output wire RegWrite2;
 	output wire MemWrite;
 	wire [1:0] FlagWrite;
 	wire [3:0] Flags;
@@ -69,6 +73,7 @@ module condlogic (
 
     assign FlagWrite = FlagW & {2 {CondExNext}};
 	assign RegWrite = RegW & CondEx;
+	assign RegWrite2 = RegW2 & CondEx;
 	assign MemWrite = MemW & CondEx;
 	assign PCSrc = PCS & CondEx;
     assign PCWrite = PCSrc | NextPC;
