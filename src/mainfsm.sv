@@ -12,7 +12,7 @@ module mainfsm (
 	RegW,
 	MemW,
 	Branch,
-	ALUOp
+	ALUOp,
 	RegW2
 );
 	input wire clk;
@@ -78,7 +78,7 @@ module mainfsm (
 			MEMRD:
               	nextstate = MEMWB;
 			ALUWB:
-				if (Funct[4:1] == 3'b101 | Funct[4:1] == 3'b110) // Detect UMUL or SMUL
+				if (Funct[4:1] == 4'b1001 | Funct[4:1] == 4'b1010) // Detect UMUL or SMUL
 					nextstate = ALUWB2;
 				else
 					nextstate = FETCH;
