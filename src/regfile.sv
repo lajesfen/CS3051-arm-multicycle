@@ -27,11 +27,13 @@ module regfile (
 	output wire [31:0] rd2;
 	reg [31:0] rf [14:0];
 	always @(posedge clk)
-		if (we3) begin
-			rf[wa3] <= wd3;
-		end
-		if (we4) begin
-			rf[wa4] <= wd4;
+		begin
+			if (we3) begin
+				rf[wa3] <= wd3;
+			end
+			if (we4) begin
+				rf[wa4] <= wd4;
+			end
 		end
 	assign rd1 = (ra1 == 4'b1111 ? r15 : rf[ra1]);
 	assign rd2 = (ra2 == 4'b1111 ? r15 : rf[ra2]);

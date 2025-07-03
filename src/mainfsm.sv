@@ -68,16 +68,16 @@ module mainfsm (
 					2'b10: nextstate = BRANCH;
 					default: nextstate = UNKNOWN;
 				endcase
-			EXECUTER: 
+			EXECUTER:
 				if (Funct[4:1] == 4'b1001 | Funct[4:1] == 4'b1010)
 					nextstate = ALUWB2;
-				else:
-					nextstate = FETCH;
+				else
+					nextstate = ALUWB;
 			EXECUTEI: 
 				if (Funct[4:1] == 4'b1001 | Funct[4:1] == 4'b1010)
 					nextstate = ALUWB2;
-				else:
-					nextstate = FETCH;
+				else
+					nextstate = ALUWB;
 			MEMADR:
               if (Funct[0])
                 nextstate = MEMRD;
