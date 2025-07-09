@@ -6,6 +6,7 @@ module controller (
 	PCWrite,
 	MemWrite,
 	RegWrite,
+	RegWrite2,
 	IRWrite,
 	AdrSrc,
 	RegSrc,
@@ -22,6 +23,7 @@ module controller (
 	output wire PCWrite;
 	output wire MemWrite;
 	output wire RegWrite;
+	output wire RegWrite2;
 	output wire IRWrite;
 	output wire AdrSrc;
 	output wire [1:0] RegSrc;
@@ -34,6 +36,7 @@ module controller (
 	wire PCS;
 	wire NextPC;
 	wire RegW;
+	wire RegW2;
 	wire MemW;
 	decode dec(
 		.clk(clk),
@@ -45,6 +48,7 @@ module controller (
 		.PCS(PCS),
 		.NextPC(NextPC),
 		.RegW(RegW),
+		.RegW2(RegW2),
 		.MemW(MemW),
 		.IRWrite(IRWrite),
 		.AdrSrc(AdrSrc),
@@ -64,9 +68,11 @@ module controller (
 		.PCS(PCS),
 		.NextPC(NextPC),
 		.RegW(RegW),
+		.RegW2(RegW2),
 		.MemW(MemW),
 		.PCWrite(PCWrite),
 		.RegWrite(RegWrite),
+		.RegWrite2(RegWrite2),
 		.MemWrite(MemWrite)
 	);
 endmodule

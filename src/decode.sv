@@ -8,6 +8,7 @@ module decode (
 	PCS,
 	NextPC,
 	RegW,
+	RegW2,
 	MemW,
 	IRWrite,
 	AdrSrc,
@@ -29,6 +30,7 @@ module decode (
 	output wire PCS;
 	output wire NextPC;
 	output wire RegW;
+	output wire RegW2;
 	output wire MemW;
 	output wire IRWrite;
 	output wire AdrSrc;
@@ -62,6 +64,7 @@ module decode (
 		.ResultSrc(ResultSrc),
 		.NextPC(NextPC),
 		.RegW(RegW),
+		.RegW2(RegW2),
 		.MemW(MemW),
 		.Branch(Branch),
 		.ALUOp(ALUOp)
@@ -76,6 +79,9 @@ module decode (
 				4'b0000: alu_reg = 3'b010; // and
 				4'b1100: alu_reg = 3'b011; // orr
 				4'b0001: alu_reg = 3'b100; // mul
+				4'b1001: alu_reg = 3'b101; // umul
+				4'b1010: alu_reg = 3'b110; // smul
+				4'b1000: alu_reg = 3'b111; // div
 				default: alu_reg = 3'bxxx;
 			endcase
 			flagw_reg[1] = Funct[0];

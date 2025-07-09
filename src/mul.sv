@@ -1,7 +1,8 @@
 module mul(
     input wire [31:0] a,
     input wire [31:0] b,
-    output reg [31:0] result
+    input wire issigned,
+    output reg [63:0] result
 );
     integer i;
     reg [63:0] multiplicand;
@@ -9,7 +10,7 @@ module mul(
     reg [63:0] product;
 
     always @(*) begin
-        multiplicand = {32'b0, a};
+        multiplicand = issigned ? {{32{a[31]}}, a} : {32'b0, a};
         multiplier = b;
         product = 64'b0;
 
@@ -21,6 +22,6 @@ module mul(
             multiplier = multiplier >> 1;
         end
 
-        result = product[31:0];
+        result = product;
     end
 endmodule
