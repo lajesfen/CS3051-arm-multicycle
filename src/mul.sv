@@ -10,13 +10,7 @@ module mul(
     reg [63:0] product;
 
     always @(*) begin
-       if (issigned)
-            if (a[31])
-                multiplicand = {32'b1, a};
-            else
-                multiplicand = {32'b0, a};
-        else
-            multiplicand = {32'b0, a};
+        multiplicand = issigned ? {{32{a[31]}}, a} : {32'b0, a};
         multiplier = b;
         product = 64'b0;
 
@@ -28,6 +22,6 @@ module mul(
             multiplier = multiplier >> 1;
         end
 
-        result = product[31:0];
+        result = product;
     end
 endmodule
