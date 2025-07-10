@@ -169,7 +169,7 @@ module datapath (
 		.d0(ALUOut),
 		.d1(Data),
 		.d2(ALUResult),
-		.d2(FPUOut),
+		.d3(FPUOut),
 		.s(ResultSrc),
 		.y(Result)
 	);
