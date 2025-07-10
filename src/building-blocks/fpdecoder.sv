@@ -4,29 +4,28 @@ module fpdecoder(
     output reg [7:0] exponent,
     output reg [22:0] fraction
 );
-    wire zero, inf, nan;
-    assign zero = (instr[30:23] == 8'd0) && (instr[22:0] == 23'd0);
-    assign inf = (instr[30:23] == 8'd255) && (instr[22:0] == 23'd0);
-    assign nan = (instr[30:23] == 8'd255) && (instr[22:0] != 23'd0);
+    wire [7:0] raw_exp = instr[30:23];
+    wire [22:0] raw_frac = instr[22:0];
+
+    wire is_zero = (raw_exp == 8'd0) && (raw_frac == 0);
+    wire is_inf  = (raw_exp == 8'd255) && (raw_frac == 0);
+    wire is_nan  = (raw_exp == 8'd255) && (raw_frac != 0);
 
     always @(*) begin
-        if (zero) begin
-            sign = instr[31];
-            exponent = 8'b00000000;
-            fraction = 23'b0;
-        end else if (inf) begin
-            sign = instr[31];
-            exponent = 8'b11111111;
-            fraction = 23'b0;
-        end else if (nan) begin
-            sign = instr[31];
-            exponent = 8'b11111111;
-            fraction = instr[22:0];
+        sign = instr[31];
+
+        if (is_zero) begin
+            exponent = 8'd0;
+            fraction = 23'd0;
+        end else if (is_inf) begin
+            exponent = 8'd255;
+            fraction = 23'd0;
+        end else if (is_nan) begin
+            exponent = 8'd255;
+            fraction = raw_frac;
         end else begin
-            sign = instr[31];
-            exponent = instr[30:23];
-            fraction = instr[22:0];
+            exponent = raw_exp;
+            fraction = raw_frac;
         end
     end
-
 endmodule

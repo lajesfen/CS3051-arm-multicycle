@@ -156,7 +156,7 @@ module datapath (
 		.b(SrcB),
 		.FPUControl(Instr[21]),
 		.Result(FPUOut)
-	)
+	);
 
 	flopr #(32) aluresreg(
 		.clk(clk),
