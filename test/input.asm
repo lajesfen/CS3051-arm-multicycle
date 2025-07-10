@@ -16,4 +16,7 @@ MOV R3, #0x40           // R3 = 0x40
 
 ORR R0, R0, R1          // R0 = 0xcccd
 ORR R0, R0, R2          // R0 = 0x0ccccd
-ORR R0, R0, R3          // R0 = 0x400ccccd
+ORR R0, R0, R3          // R0 = 0x400ccccd (2.2)
+
+MOV R1, R0              // R1 = 0x400ccccd (2.2)
+FADD R2, R1, R0         // R2 = 0x408ccccd (4.4)
