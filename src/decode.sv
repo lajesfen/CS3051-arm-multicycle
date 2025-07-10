@@ -39,13 +39,13 @@ module decode (
 	output wire [1:0] ALUSrcB;
 	output wire [1:0] ImmSrc;
 	output wire [1:0] RegSrc;
-	output wire [2:0] ALUControl;
+	output wire [3:0] ALUControl;
 
 	// Señales internas
 	wire Branch;
 	wire ALUOp;
 	reg [1:0] flagw_reg;
-	reg [2:0] alu_reg;
+	reg [3:0] alu_reg;
 
 	// Asignación de salida FlagW y ALUControl desde registro interno
 	assign FlagW = flagw_reg;
@@ -74,21 +74,22 @@ module decode (
 	always @(*) begin
 		if (ALUOp) begin
 			case (Funct[4:1])
-				4'b0100: alu_reg = 3'b000; // add
-				4'b0010: alu_reg = 3'b001; // sub
-				4'b0000: alu_reg = 3'b010; // and
-				4'b1100: alu_reg = 3'b011; // orr
-				4'b0001: alu_reg = 3'b100; // mul
-				4'b1001: alu_reg = 3'b101; // umul
-				4'b1010: alu_reg = 3'b110; // smul
-				4'b1000: alu_reg = 3'b111; // div
-				default: alu_reg = 3'bxxx;
+				4'b0100: alu_reg = 4'b0000; // add
+				4'b0010: alu_reg = 4'b0001; // sub
+				4'b0000: alu_reg = 4'b0010; // and
+				4'b1100: alu_reg = 4'b0011; // orr
+				4'b0001: alu_reg = 4'b0100; // mul
+				4'b1001: alu_reg = 4'b0101; // umul
+				4'b1010: alu_reg = 4'b0110; // smul
+				4'b1000: alu_reg = 4'b0111; // div
+				4'b1101: alu_reg = 4'b1000; // mov
+				default: alu_reg = 4'bxxx;
 			endcase
 			flagw_reg[1] = Funct[0];
-			flagw_reg[0] = Funct[0] & ((alu_reg == 3'b000) | (alu_reg == 3'b001));
+			flagw_reg[0] = Funct[0] & ((alu_reg == 4'b0000) | (alu_reg == 4'b0001));
 		end
 		else begin
-			alu_reg = 3'b000;
+			alu_reg = 4'b0000;
 			flagw_reg = 2'b00;
 		end
 	end
@@ -102,3 +103,4 @@ module decode (
 	assign RegSrc[1] = (Op == 2'b01);
 
 endmodule
+
