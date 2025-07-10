@@ -1,21 +1,32 @@
 module fpdecoder(
     input [31:0] instr,
-    output wire sign,
-    output wire [7:0] exponent,
-    output wire [8:0] unbiexponent,
-    output wire normalized,
-    output wire [23:0] mantissa
+    output reg sign,
+    output reg [7:0] exponent,
+    output reg [22:0] fraction
 );
-    assign sign = instr[31];
-    assign exponent = instr[30:23];
-    assign unbiexponent = exponent - 8'd127;
-    assign normalized = (exponent != 8'b0);
-    assign mantissa = instr[22:0];
+    wire zero, inf, nan;
+    assign zero = (instr[30:23] == 8'd0) && (instr[22:0] == 23'd0);
+    assign inf = (instr[30:23] == 8'd255) && (instr[22:0] == 23'd0);
+    assign nan = (instr[30:23] == 8'd255) && (instr[22:0] != 23'd0);
 
-    // VER SI ES NECESARIO AGREGAR ESTO:
-    // assign zero = (exponent == 8'd0) && (instr[22:0] == 23'd0);
-    // assign inf = (exponent == 8'd255) && (instr[22:0] == 23'd0);
-    // assign nan = (exponent == 8'd255) && (instr[22:0] != 23'd0);
+    always @(*) begin
+        if (zero) begin
+            sign = instr[31];
+            exponent = 8'b00000000;
+            fraction = 23'b0;
+        end else if (inf) begin
+            sign = instr[31];
+            exponent = 8'b11111111;
+            fraction = 23'b0;
+        end else if (nan) begin
+            sign = instr[31];
+            exponent = 8'b11111111;
+            fraction = instr[22:0];
+        end else begin
+            sign = instr[31];
+            exponent = instr[30:23];
+            fraction = instr[22:0];
+        end
+    end
 
-    // assign FPFlags = {zero, inf, nan};
 endmodule
