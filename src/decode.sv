@@ -83,6 +83,8 @@ module decode (
 				4'b1010: alu_reg = 4'b0110; // smul
 				4'b1000: alu_reg = 4'b0111; // div
 				4'b1101: alu_reg = 4'b1000; // mov
+				// Reserved fadd: 4'b1110
+				// Reserved fmul: 4'b1111
 				default: alu_reg = 4'bxxx;
 			endcase
 			flagw_reg[1] = Funct[0];

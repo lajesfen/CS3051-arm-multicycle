@@ -45,6 +45,7 @@ module mainfsm (
   	localparam [3:0] BRANCH = 9;
 	localparam [3:0] UNKNOWN = 10;
     localparam [3:0] ALUWB2 = 11;
+    localparam [3:0] FPUWB = 12;
 
 	// state register
 	always @(posedge clk or posedge reset)
@@ -71,11 +72,15 @@ module mainfsm (
 			EXECUTER:
 				if (Funct[4:1] == 4'b1001 | Funct[4:1] == 4'b1010)
 					nextstate = ALUWB2;
+				else if (Funct[4:1] == 4'b1110 | Funct[4:1] == 4'b1111)
+					nextstate = FPUWB;
 				else
 					nextstate = ALUWB;
 			EXECUTEI: 
 				if (Funct[4:1] == 4'b1001 | Funct[4:1] == 4'b1010)
 					nextstate = ALUWB2;
+				else if (Funct[4:1] == 4'b1110 | Funct[4:1] == 4'b1111)
+					nextstate = FPUWB;
 				else
 					nextstate = ALUWB;
 			MEMADR:
@@ -96,6 +101,7 @@ module mainfsm (
 			EXECUTER: controls = 14'b00000000000010;
 			EXECUTEI: controls = 14'b00000000000110;
 			ALUWB: controls    = 14'b00010000000000;
+			FPUWB: controls    = 14'b00010011000000;
 			ALUWB2: controls   = 14'b00010000000001;
 			MEMADR: controls   = 14'b00000000000100;
 			MEMWRITE: controls = 14'b00100100000000;

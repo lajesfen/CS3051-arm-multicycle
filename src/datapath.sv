@@ -49,6 +49,7 @@ module datapath (
 	wire [31:0] ALUResult;
 	wire [31:0] ALUResult2;
 	wire [31:0] ALUOut;
+	wire [31:0] FPUOut;
 	wire [3:0] RA1;
 	wire [3:0] RA2;
 
@@ -150,6 +151,13 @@ module datapath (
 		.ALUFlags(ALUFlags)
 	);
 
+	fpu fpu(
+		.a(SrcA),
+		.b(SrcB),
+		.FPUControl(Instr[21]),
+		.Result(FPUOut)
+	)
+
 	flopr #(32) aluresreg(
 		.clk(clk),
 		.reset(reset),
@@ -157,10 +165,11 @@ module datapath (
 		.q(ALUOut)
 	);
 
-	mux3 #(32) resmux(
+	mux4 #(32) resmux(
 		.d0(ALUOut),
 		.d1(Data),
 		.d2(ALUResult),
+		.d2(FPUOut),
 		.s(ResultSrc),
 		.y(Result)
 	);
