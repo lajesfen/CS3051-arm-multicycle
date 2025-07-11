@@ -4,7 +4,8 @@ module arm (
 	MemWrite,
 	Adr,
 	WriteData,
-	ReadData
+	ReadData,
+	Result
 );
 	input wire clk;
 	input wire reset;
@@ -12,6 +13,7 @@ module arm (
 	output wire [31:0] Adr;
 	output wire [31:0] WriteData;
 	input wire [31:0] ReadData;
+	output wire [31:0] Result;
 	wire [31:0] Instr;
 	wire [3:0] ALUFlags;
 	wire PCWrite;
@@ -25,6 +27,7 @@ module arm (
 	wire [1:0] ImmSrc;
 	wire [3:0] ALUControl;
 	wire [1:0] ResultSrc;
+	wire Half;
 	controller c(
 		.clk(clk),
 		.reset(reset),
@@ -41,7 +44,8 @@ module arm (
 		.ALUSrcB(ALUSrcB),
 		.ResultSrc(ResultSrc),
 		.ImmSrc(ImmSrc),
-		.ALUControl(ALUControl)
+		.ALUControl(ALUControl),
+		.Half(Half)
 	);
 	datapath dp(
 		.clk(clk),
@@ -61,7 +65,9 @@ module arm (
 		.ALUSrcB(ALUSrcB),
 		.ResultSrc(ResultSrc),
 		.ImmSrc(ImmSrc),
-		.ALUControl(ALUControl)
+		.ALUControl(ALUControl),
+		.Half(Half),
+		.Result(Result)
 	);
 endmodule
 

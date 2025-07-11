@@ -32,6 +32,7 @@ module controller (
 	output wire [1:0] ResultSrc;
 	output wire [1:0] ImmSrc;
 	output wire [3:0] ALUControl;
+	output wire Half;
 	wire [1:0] FlagW;
 	wire PCS;
 	wire NextPC;
@@ -57,7 +58,8 @@ module controller (
 		.ALUSrcB(ALUSrcB),
 		.ImmSrc(ImmSrc),
 		.RegSrc(RegSrc),
-		.ALUControl(ALUControl)
+		.ALUControl(ALUControl),
+		.Half(Half)
 	);
 	condlogic cl(
 		.clk(clk),

@@ -3,13 +3,15 @@ module top (
 	reset,
 	WriteData,
 	Adr,
-	MemWrite
+	MemWrite,
+	Result
 );
 	input wire clk;
 	input wire reset;
 	output wire [31:0] WriteData;
 	output wire [31:0] Adr;
 	output wire MemWrite;
+	output wire[31:0] Result;
 	wire [31:0] PC;
     wire [31:0] Instr;
 	wire [31:0] ReadData;
@@ -20,7 +22,8 @@ module top (
 		.MemWrite(MemWrite),
 		.Adr(Adr),
 		.WriteData(WriteData),
-		.ReadData(ReadData)
+		.ReadData(ReadData),
+		.Result(Result)
 	);
 	mem mem(
 		.clk(clk),
