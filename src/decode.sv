@@ -40,6 +40,7 @@ module decode (
 	output wire [1:0] ImmSrc;
 	output wire [1:0] RegSrc;
 	output wire [3:0] ALUControl;
+	output wire Half;
 
 	// Señales internas
 	wire Branch;
@@ -67,7 +68,8 @@ module decode (
 		.RegW2(RegW2),
 		.MemW(MemW),
 		.Branch(Branch),
-		.ALUOp(ALUOp)
+		.ALUOp(ALUOp),
+		.Half(Half)
 	);
 
 	// ALU Decoder
@@ -85,6 +87,8 @@ module decode (
 				4'b1101: alu_reg = 4'b1000; // mov
 				// Reserved fadd: 4'b1110
 				// Reserved fmul: 4'b1111
+				// Reserved faddh: 4'b0110 (HALF)
+				// Reserved fmulh: 4'b0111 (HALF)
 				default: alu_reg = 4'bxxx;
 			endcase
 			flagw_reg[1] = Funct[0];

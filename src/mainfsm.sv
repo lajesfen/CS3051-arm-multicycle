@@ -13,7 +13,8 @@ module mainfsm (
 	RegW2,
 	MemW,
 	Branch,
-	ALUOp
+	ALUOp,
+	Half
 );
 	input wire clk;
 	input wire reset;
@@ -30,9 +31,10 @@ module mainfsm (
 	output wire MemW;
 	output wire Branch;
 	output wire ALUOp;
+	output wire Half;
 	reg [3:0] state;
 	reg [3:0] nextstate;
-	reg [13:0] controls;
+	reg [14:0] controls;
 	localparam [3:0] FETCH = 0;
   	localparam [3:0] DECODE = 1;
 	localparam [3:0] MEMADR = 2;
@@ -74,6 +76,8 @@ module mainfsm (
 					nextstate = ALUWB2;
 				else if (Funct[4:1] == 4'b1110 | Funct[4:1] == 4'b1111)
 					nextstate = FPUWB;
+				else if (Funct[4:1] == 4'b0110 | Funct[4:1] == 4'b0111)
+					nextstate = FPU16WB;
 				else
 					nextstate = ALUWB;
 			EXECUTEI: 
@@ -81,6 +85,8 @@ module mainfsm (
 					nextstate = ALUWB2;
 				else if (Funct[4:1] == 4'b1110 | Funct[4:1] == 4'b1111)
 					nextstate = FPUWB;
+				else if (Funct[4:1] == 4'b0110 | Funct[4:1] == 4'b0111)
+					nextstate = FPU16WB;
 				else
 					nextstate = ALUWB;
 			MEMADR:
@@ -96,20 +102,21 @@ module mainfsm (
 	// state-dependent output logic
 	always @(*)
 		case (state)
-			FETCH: controls    = 14'b10001010011000;
-			DECODE: controls   = 14'b00000010011000;
-			EXECUTER: controls = 14'b00000000000010;
-			EXECUTEI: controls = 14'b00000000000110;
-			ALUWB: controls    = 14'b00010000000000;
-			FPUWB: controls    = 14'b00010011000000;
-			ALUWB2: controls   = 14'b00010000000001;
-			MEMADR: controls   = 14'b00000000000100;
-			MEMWRITE: controls = 14'b00100100000000;
-			MEMRD: controls    = 14'b00000000000000;
-			MEMWB: controls    = 14'b00010001000000;
-			BRANCH: controls   = 14'b01000010000100;
-			default: controls  = 14'bxxxxxxxxxxxxxx;
+			FETCH: controls    = 15'b100010100110000;
+			DECODE: controls   = 15'b000000100110000;
+			EXECUTER: controls = 15'b000000000000100;
+			EXECUTEI: controls = 15'b000000000001100;
+			ALUWB: controls    = 15'b000100000000000;
+			FPUWB: controls    = 15'b000100110000000;
+			FPU16WB: controls  = 15'b000100110000001;
+			ALUWB2: controls   = 15'b000100000000010;
+			MEMADR: controls   = 15'b000000000001000;
+			MEMWRITE: controls = 15'b001001000000000;
+			MEMRD: controls    = 15'b000000000000000;
+			MEMWB: controls    = 15'b000100010000000;
+			BRANCH: controls   = 15'b010000100001000;
+			default: controls  = 15'bxxxxxxxxxxxxxxx;
 		endcase
-    //         0       0      0     0      0        0       00         00       00      0      0
-	assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp, RegW2} = controls;
+    //         0       0      0     0      0        0       00         00       00      0      0	 0
+	assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp, RegW2, Half} = controls;
 endmodule

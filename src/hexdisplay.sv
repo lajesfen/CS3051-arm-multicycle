@@ -3,19 +3,12 @@ module hexdisplay(
     input reset,
     input[15:0] data,
     output wire[3:0] anode,
-    output wire[7:0]catode
+    output wire[7:0] catode
 );
-    wire scl_clk;
     wire[3:0] digit;
-    
-    clkdivider sc(
-        .clk(clk),
-        .reset(reset),
-        .t(scl_clk)
-    );
 
     hfsm m(
-        .clk(scl_clk),
+        .clk(clk),
         .reset(reset),
         .data(data),
         .digit(digit),
