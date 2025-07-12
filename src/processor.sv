@@ -6,8 +6,8 @@ module processor (
 );
 	input wire clk;
 	input wire reset;
-    output wire[3:0] anode,
-    output wire[7:0] catode
+    output wire[3:0] anode;
+    output wire[7:0] catode;
 	
     wire [31:0] WriteData;
 	wire [31:0] Adr;
@@ -15,11 +15,20 @@ module processor (
     wire [31:0] Result;
 
     wire scl_clk;
+    wire display_clk;
+    
+    assign reset_n = ~reset;
 
-    clkdivider #(4) sc(
+    clkdivider #(50000000) sc(
         .clk(clk),
         .reset(reset),
         .t(scl_clk)
+    );
+
+    clkdivider #(5000000) display_div(
+        .clk(clk),
+        .reset(reset),
+        .t(display_clk)
     );
 
 	top top(
@@ -32,7 +41,7 @@ module processor (
 	);
 
     hexdisplay hexdisp(
-		.clk(clk),
+		.clk(display_clk),
 		.reset(reset),
 		.data(Result[15:0]),
 		.anode(anode),

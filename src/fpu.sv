@@ -12,7 +12,11 @@ module fpu(
         .Result(fpadd_res)
     );
 
-    // ToDo: Add fpmul module
+    fpmul fpumul_inst (
+        .a(a),
+        .b(b),
+        .Result(fpmul_res)
+    );
 
     always @(*)
         begin

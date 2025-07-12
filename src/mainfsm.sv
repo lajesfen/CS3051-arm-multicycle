@@ -48,6 +48,7 @@ module mainfsm (
 	localparam [3:0] UNKNOWN = 10;
     localparam [3:0] ALUWB2 = 11;
     localparam [3:0] FPUWB = 12;
+    localparam [3:0] FPU16WB = 13;
 
 	// state register
 	always @(posedge clk or posedge reset)

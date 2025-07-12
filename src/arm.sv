@@ -28,6 +28,7 @@ module arm (
 	wire [3:0] ALUControl;
 	wire [1:0] ResultSrc;
 	wire Half;
+
 	controller c(
 		.clk(clk),
 		.reset(reset),
@@ -47,6 +48,7 @@ module arm (
 		.ALUControl(ALUControl),
 		.Half(Half)
 	);
+
 	datapath dp(
 		.clk(clk),
 		.reset(reset),
@@ -70,4 +72,3 @@ module arm (
 		.Result(Result)
 	);
 endmodule
-

@@ -17,7 +17,8 @@ module decode (
 	ALUSrcB,
 	ImmSrc,
 	RegSrc,
-	ALUControl
+	ALUControl,
+	Half
 );
 	input wire clk;
 	input wire reset;
@@ -109,4 +110,3 @@ module decode (
 	assign RegSrc[1] = (Op == 2'b01);
 
 endmodule
-
