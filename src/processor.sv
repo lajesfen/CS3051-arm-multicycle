@@ -19,13 +19,13 @@ module processor (
     
     assign reset_n = ~reset;
 
-    clkdivider #(50000000) sc(
+    clkdivider #(30000000) sc(
         .clk(clk),
         .reset(reset),
         .t(scl_clk)
     );
 
-    clkdivider #(5000000) display_div(
+    clkdivider #(10000) display_div(
         .clk(clk),
         .reset(reset),
         .t(display_clk)
