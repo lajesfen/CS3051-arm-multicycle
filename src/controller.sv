@@ -14,7 +14,8 @@ module controller (
 	ALUSrcB,
 	ResultSrc,
 	ImmSrc,
-	ALUControl
+	ALUControl,
+	Half
 );
 	input wire clk;
 	input wire reset;

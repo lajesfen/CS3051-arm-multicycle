@@ -20,27 +20,27 @@ module hfsm(
     always @(*) begin
         case (state)
             D0: begin
-                digit <= data[15:12];
-                anode <= 4'b0111;
+                digit = data[15:12];
+                anode = 4'b0111;
                 nextstate = D1;
             end
             D1: begin 
-                digit <= data[11:8];
-                anode <= 4'b1011;
+                digit = data[11:8];
+                anode = 4'b1011;
                 nextstate = D2;
             end
             D2: begin
-                digit <= data[7:4];
-                anode <= 4'b1101;
+                digit = data[7:4];
+                anode = 4'b1101;
                 nextstate = D3;
             end
             D3: begin
-                digit <= data[3:0];
-                anode <= 4'b1110;
+                digit = data[3:0];
+                anode = 4'b1110;
                 nextstate = D0;
             end
             default: nextstate = D0;
         endcase
-    end  
+    end 
 
 endmodule

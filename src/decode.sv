@@ -110,4 +110,3 @@ module decode (
 	assign RegSrc[1] = (Op == 2'b01);
 
 endmodule
-
