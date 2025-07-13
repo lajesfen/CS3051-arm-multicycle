@@ -35,12 +35,12 @@ module condlogic (
     wire PCSrc;
 
     // Delay writing flags until ALUWB state
-	flopr #(2) flagwritereg(
-		.clk(clk),
-		.reset(reset),
-		.d(FlagW & {2 {CondExNext}}),
-		.q(FlagWrite)
-	);
+	//flopr #(2) flagwritereg(
+	//	.clk(clk),
+	//	.reset(reset),
+	//	.d(FlagW & {2 {CondExNext}}),
+	//	.q(FlagWrite)
+	//);
 
     flopr #(1) condexreg(
         .clk(clk),

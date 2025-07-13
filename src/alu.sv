@@ -38,12 +38,12 @@ module alu(
             4'b0011: Result = a | b;                    
             4'b0100: Result = mulres[31:0];             // mul
             4'b0101: begin                              // umul
-                Result = mulres[31:0];
-                Result2 = mulres[63:32];
+                Result = mulres[63:32];
+                Result2 = mulres[31:0];
             end
             4'b0110: begin                              // smul
-                Result = mulres[31:0];
-                Result2 = mulres[63:32];
+                Result = mulres[63:32];
+                Result2 = mulres[31:0];
             end
             4'b0111: Result = divres;                   // div
             4'b1000: Result = b;                        // mov

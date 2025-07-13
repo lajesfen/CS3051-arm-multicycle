@@ -17,7 +17,8 @@ module decode (
 	ALUSrcB,
 	ImmSrc,
 	RegSrc,
-	ALUControl
+	ALUControl,
+	Half
 );
 	input wire clk;
 	input wire reset;

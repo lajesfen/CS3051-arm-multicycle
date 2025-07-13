@@ -17,6 +17,7 @@ module datapath (
 	ResultSrc,
 	ImmSrc,
 	ALUControl,
+	Half,
 	Result
 );
 	input wire clk;
