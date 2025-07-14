@@ -16,6 +16,8 @@ module processor (
 
     wire scl_clk;
     wire display_clk;
+
+    //-------prueba con la placa---------//
     
     assign reset_n = ~reset;
 
@@ -47,4 +49,27 @@ module processor (
 		.anode(anode),
 		.catode(catode)
 	);
+
+    //---------------------------------//
+
+    // para visualizar el waveform (comentar prueba con la placa)
+
+    /*
+        top top(
+            .clk(clk),
+            .reset(reset),
+            .WriteData(WriteData),
+            .Adr(Adr),
+            .MemWrite(MemWrite),
+            .Result(Result)
+        );
+
+        hexdisplay hexdisp(
+            .clk(display_clk),
+            .reset(reset),
+            .data(Result[15:0]),
+            .anode(anode),
+            .catode(catode)
+        );
+    */
 endmodule
