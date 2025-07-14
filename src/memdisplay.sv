@@ -11,6 +11,8 @@ module mem (
 	input wire [31:0] wd;
 	output wire [31:0] rd;
 	reg [31:0] RAM [63:0];
+
+	// initial $readmemh("memfile.dat", RAM);
 	
 	initial begin
 		RAM[0] = 32'hE3A00000;
